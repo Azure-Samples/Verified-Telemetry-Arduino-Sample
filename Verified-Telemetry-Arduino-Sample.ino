@@ -53,12 +53,12 @@ void VT_setup() {
   EEPROM.get(VT_EEPROM_OFFSET + components_num*sizeof(VT_CURRENTSENSE_DATABASE_FLATTENED)+1, firstBoot);
 
   
-  if(firstBoot!=127)
+  if(firstBoot!=128)
   { 
     Serial.println("Calibrating for first boot");  
     VT_Command_process("resetDigitalSensorOne");
     VT_Command_process("resetDigitalSensorTwo");
-    EEPROM.put(VT_EEPROM_OFFSET + components_num*sizeof(VT_CURRENTSENSE_DATABASE_FLATTENED)+1, 127);    
+    EEPROM.put(VT_EEPROM_OFFSET + components_num*sizeof(VT_CURRENTSENSE_DATABASE_FLATTENED)+1, 128);    
     EEPROM.commit();
   }
   else 
@@ -211,14 +211,14 @@ void VT_loop() {
 
         if(handle->cs_object.Calibration_Done_Count==MULTICALIBRATION_COUNT)
         {
-          Serial.printf(" \n DB SAVED FOR: %.*s \n",handle->component_name_length,(CHAR*)handle->component_name_ptr);
+          //Serial.printf(" \n DB SAVED FOR: %.*s \n",handle->component_name_length,(CHAR*)handle->component_name_ptr);
           vt_currentsense_object_database_fetch(&(handle->cs_object),&flattened_db_local,&db_update_needed,&confidence_metric_local);
 
           if(db_update_needed==true)
             {
-              Serial.println("db_updated");
+              Serial.printf(" \n DB SAVED FOR: %.*s \n",handle->component_name_length,(CHAR*)handle->component_name_ptr);
               EEPROM.put(VT_EEPROM_OFFSET + iter*sizeof(VT_CURRENTSENSE_DATABASE_FLATTENED), flattened_db_local);
-              Serial.println(iter);              
+              //Serial.println(iter);              
               eepromIndex=-1;
               EEPROM.commit();
             }

@@ -15,7 +15,7 @@ unsigned long cycle_time=0;
 
 /* Variables needed for External ADC Buffer Read */
 
-
+/* Sensor Hardware declaration */
 
 //sensor_3
 uint16_t vt_adc_id_sensor_3 = SAMPLE_EXTERNAL_ADC_TYPE_ID;

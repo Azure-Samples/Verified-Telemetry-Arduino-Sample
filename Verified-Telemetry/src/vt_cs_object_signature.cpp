@@ -127,9 +127,9 @@ VT_VOID vt_currentsense_object_signature_process(VT_CURRENTSENSE_OBJECT* cs_obje
             cs_calibrate_sensor(cs_object);
             
             #if VT_LOG_LEVEL > 1
-            Serial.printf(" Calibration_Done_Count : %d MultiCalibration_Count : %d ",cs_object->Calibration_Done_Count,MULTICALIBRATION_COUNT);
-            Serial.printf("\n NUM SIG = %d \n", cs_object->fingerprintdb.template_struct.repeating_signatures.num_signatures);
-            Serial.printf(" final T type : %d", cs_object->fingerprintdb.template_type);
+            Serial.printf(" Calibration_Done_Count : %d MultiCalibration_Count : %d \n",cs_object->Calibration_Done_Count,MULTICALIBRATION_COUNT);
+            //Serial.printf("\n NUM SIG = %d \n", cs_object->fingerprintdb.template_struct.repeating_signatures.num_signatures);
+            //Serial.printf(" final T type : %d", cs_object->fingerprintdb.template_type);
             #endif
             
             break;
