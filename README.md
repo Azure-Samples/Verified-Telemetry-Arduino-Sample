@@ -1,13 +1,12 @@
 
-# Getting Started with Verified Telemetry on Arduino
+# Getting Started with Verified Telemetry For Arduino
 
 ## Table of Contents
 
 * [Verified Telemetry Overview](#verified-telemetry-overview)
-* [Links to board specific Device Samples](#sample-setup)
-* [Analog and Digital Sensors configuration guide for Verified Telemetry.](#sensor-configuration)
-* [Verified Telemetry Concepts](#calibration-and-testing)
-* [Compatibility with other Arduino based boards](#compatibility-with-other-boards)
+* [Sample Setup Process](#setting-up-the-sample)
+* [Hardware Setup and Configurations](#hardware-setup-and-configurations)
+* [Compatibility with other Arduino Boards](#compatibility-with-other-arduino-boards)
 
 ## Verified Telemetry Overview
 
@@ -44,9 +43,11 @@ A few key concepts of VT are introduced and discussed below:
 | |Description|
 |-|-|
 |[Verified Telemetry SDK](/Verified-Telemetry) |The SDK which builds on the Arduino middleware and describes how to integrate VT into existing device code. |
-|[Verified Telemetry Device Sample](https://github.com/Azure-Samples/Verified-Telemetry-Arduino-Sample) |These Getting Started guides shows device developers how to combine Verified Telemetry with existing Arduino code. |
+|[Verified Telemetry Arduino Sample](https://github.com/Azure-Samples/Verified-Telemetry-Arduino-Sample) |These Getting Started guides shows device developers how to combine Verified Telemetry with existing Arduino code. |
+|[Verified Telemetry FreeRTOS Sample](https://github.com/Azure-Samples/Verified-Telemetry-FreeRTOS-Sample) |These Getting Started guides shows device developers how to combine Verified Telemetry with [Azure IoT](https://azure.microsoft.com/overview/iot/) and [Azure IoT middleware for FreeRTOS](https://github.com/Azure/azure-iot-middleware-freertos). |
+|[Verified Telemetry AzureRTOS Sample](https://github.com/Azure/Verified-Telemetry-Device-Sample) |These Getting Started guides shows device developers how to combine Verified Telemetry with [Azure IoT](https://azure.microsoft.com/overview/iot/) and [Azure RTOS](https://docs.microsoft.com/azure/rtos/). |
 
-## Sample Setup
+## Setting Up The Sample
 
 This device sample shows developers how to get started with Verified Telementry for Arduino and how to include Verified Telemetry with your existing Arduino code. This guide is for the ESP8266 based NodeMcu development board, however this sample can also be used to setup other arduino based developement board with minor changes descirbed in [Support for other Arduino compatible boards](#compatibility-with-other-boards-and-possible-additions)
 
@@ -85,7 +86,7 @@ This device sample shows developers how to get started with Verified Telementry 
 
 * the cloned repository has the [Verified Telemetry Library](/Verified-Telemetry) folder, this folder needs to be copied into the libraries folder in the Arduino user files, typically in  ``` C:\Users\VTUser\Documents\Arduino\libraries\Verified-Telemetry ``` for windows.
 
-## Sensor Type and Configuration
+## Hardware Setup and Configurations
 
 ### General Overview
 
