@@ -138,26 +138,24 @@ void VT_loop() {
     string_buffer=Serial.readString();
     VT_Command_process(string_buffer);
   }
-
     // FOR SENSOR 1
+    /* SPS30 READ FUNCTION*/
+    pm2_5 = sps_loop();
+
     FreeRTOS_vt_signature_read(verified_telemetry_DB,
         (UCHAR*)telemetry_name_pmsExternal1Raw,
         sizeof(telemetry_name_pmsExternal1Raw) - 1,1);
-
-    /* SPS30 READ FUNCTION*/
-    pm2_5 = sps_loop();
 
     FreeRTOS_vt_signature_process(verified_telemetry_DB,
         (UCHAR*)telemetry_name_pmsExternal1Raw,
         sizeof(telemetry_name_pmsExternal1Raw) - 1);
 
-
     // FOR SENSOR 2
+    // Sample Second Sensor read function
+
     FreeRTOS_vt_signature_read(verified_telemetry_DB,
         (UCHAR*)telemetry_name_pmsExternal2Raw,
         sizeof(telemetry_name_pmsExternal2Raw) - 1,1);
-
-    // Sample Second Sensor read function
 
     FreeRTOS_vt_signature_process(verified_telemetry_DB,
         (UCHAR*)telemetry_name_pmsExternal2Raw,

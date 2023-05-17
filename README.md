@@ -101,6 +101,7 @@ This device sample shows developers how to get started with Verified Telementry 
 
 * the sample is configured for 2 Digital sensors, use the below schematic and connection table to test out VT Arudino sample.
 * To modify preexisting Hardware Definitions or to add support for new sensors, minimal changes are required to [sample_freertos_verified_telemetry_init.c](sample_freertos_verified_telemetry_init.c) for these changes, refer [Modifying ADC, GPIO, Hardware Definitions of sample and new sensors](#modifying-adc-gpio-hardware-definitions-of-sample-and-new-sensors).
+* Some sensor also require the sensor read fucntion to be called right before the fingerprint collection, for this reason we recommend you to call all the sensor read fucntion as shown in [Integrating New Sensors](#steps-to-integrate-new-sensor-read-fucntions) section, to avoid any unexpected behaviour.
 
 
 * ESP8266 Connections 
@@ -225,13 +226,6 @@ calibrate for : vTPMSExternal1
 {'Second_Sensor_Status': 0 ,'Dummy_Second_Sensor_Data': 7} 
 ```
 
-### Compatibility with other boards and possible additions
-
-* Verified Telemetry Arduino sample is currently compatible with ESP8266 based boards, support for other boards can be added by making additional changes for which users can refer the below points(mention MCP read fucntions and other changes required for other boards)
-
-The Verified Telemetry Arduino sample enables devices with Arduino compatibility to use Verified Telemetry, VT Arduino Sample comes with a fully functional fault detection SDK which can be easily combined and shipped with your own set of features like IoT integration and environment monitoring. 
-
-
 ### Modifying ADC, GPIO, Hardware Definitions of sample and new sensors
     
 * Hardware Definitions are present in file sample_vt_device_driver.cpp and is externed in sample_vt_device_driver.h, for any new sensor or to modify current hardware, check the instruction below.
@@ -277,6 +271,35 @@ The Verified Telemetry Arduino sample enables devices with Arduino compatibility
                                            &sample_handle_sensor_N);
 
        #endif
+
+## Compatibility with other Arduino boards
+The Verified Telemetry Arduino sample enables devices with Arduino compatibility to use Verified Telemetry, VT Arduino Sample comes with a fully functional fault detection SDK which can be easily combined and shipped with your own set of features like IoT integration and environment monitoring. 
+
+Verified Telemetry Arduino sample is currently compatible with ESP8266 based boards, support for other boards can be added by making minimal changes for which users can refer the below steps.
+
+### Steps to integrate MCP3204 library
+
+To add support for other boards, the key change required is adding a MCP3204 ADC read library. 
+
+1. Find a compatable MCP3204 library that is capable of reading ADC data from MCP3204, a compatable MCP3204 library can be found on the arduino library manager after selecting your board of choice. 
+
+2. The new MCP library and it's corresponding read fucntions need to be added in [sample_vt_device_driver.c](/sample_vt_device_driver.c) file to read the MCP3204 ADC values. Start by adding the library header in the file and then creating an MCP Object as on line number  ```6    #include <MCP3XXX.h>``` and ```10    MCP3XXX_<10, 4, 312500> adc;``` respectively.
+
+3. The final step is to use the MCP ADC read function as on line number ```127 adc_mcp3204_read_buffer_local[adc_mcp3204_read_buffer_datapoints_stored] = adc.analogRead(*((uint8_t*)adc_channel));``` which would return the ADC values from MCP3204 to the library.
+
+> **Note**    
+> If an off the shelf library is not available for your board, you can create a basic library with MCP3204 read capability and use it in the sample. the main requirement is that the library should be able to read the ADC values from MCP3204 and return the values as done on line number  
+```127 ... adc.analogRead(*((uint8_t*)adc_channel));```.
+
+### Steps to integrate new sensors
+With new sensors, it is required to call the sensor read function just before the fingerprint collection starts, this is needed to capture the ***active*** region of the sensors current i.e. the state where the sensor is actively collecting sensor data, and all the sensing components are active. follow the steps below when adding new sensors.
+
+1. The sensor read function can be defined in [sample_vt_device_driver.c](/sample_vt_device_driver.c) file, as can be seen on line number ``` 41 void sps_setup() ``` and ``` 58 int sps_loop() ``` for SPS sensor.
+
+2. the sensor read fucntion, ```sps_loop()``` in this case, should be called just before the ```FreeRTOS_vt_signature_read()``` function is called, as can be seen on line number ``` 143 pm2_5 = sps_loop(); ```.
+
+3. Finally, connect the ***DINx*** (x can be 1/2/3/4) pin of the CS Hat to HIGH (3.3v), this enables the input channel ***Sensor 1/2/3/4 Gnd*** on the CS Hat and enables read capabilities. Instead you can short the ***Sensor Global Control*** jumpers to enable all Sensor 1-4 Gnd pins.
+
 
 ## Support
 
