@@ -18,11 +18,11 @@ A few key concepts of VT are introduced and discussed below:
 
 1. Sensor Fingerprint
     * Sensor fingerprint is an electrical characteristic that is measured by the Embedded device for a particular sensor
-    * The Sensor fingerprint of a working sensor differs from that of a sensor with fault
+    * The Sensor fingerprint of a working sensor differs from that of a sensor with a fault
 
 1. Sensor Fingerprint Template
-    * Sensor fingerprint template is a fingerprint of a working sensor
-    * The fingerprint template is collected by the Embedded device, ideally when the sensor is provisioned first and stored locally on device.
+    * The Sensor fingerprint template is a fingerprint of a working sensor
+    * The fingerprint template is collected by the Embedded device, ideally when the sensor is provisioned first and stored locally on the device.
 
 1. Sensor Fingerprint Collection
     * Sensor Fingerprint Collection is a process where the Embedded device measures the fingerprint of a sensor
@@ -49,7 +49,7 @@ A few key concepts of VT are introduced and discussed below:
 
 ## Setting Up The Sample
 
-This device sample shows developers how to get started with Verified Telementry for Arduino and how to include Verified Telemetry with your existing Arduino code. This guide is for the ESP8266 based NodeMcu development board, however this sample can also be used to setup other arduino based developement board with minor changes descirbed in [Support for other Arduino compatible boards](#compatibility-with-other-boards-and-possible-additions)
+This device sample shows developers how to get started with Verified Telemetry for Arduino and how to include Verified Telemetry with your existing Arduino code. This guide is for the ESP8266 based NodeMcu development board, however, this sample can also be used to setup other Arduino based development boards with minor changes described in [Support for other Arduino compatible boards](#compatibility-with-other-arduino-boards)
 
 ### Prerequisites
 
@@ -72,7 +72,7 @@ This device sample shows developers how to get started with Verified Telementry 
     ```
 4. CurrentSense Hat module.
    
-    For digital sensor the VT Library utilizes the fingerprint extracted from the current profile of a sensor, to add current mesurement capability to the MCU an additional module, The [CurrentSense Hat](https://github.com/Azure/Verified-Telemetry/tree/main/Hardware/CS%20Hat) is required. 
+    For digital sensor the VT Library utilizes the fingerprint extracted from the current profile of a sensor, to add current measurement capability to the MCU an additional module, The [CurrentSense Hat](https://github.com/Azure/Verified-Telemetry/tree/main/Hardware/CS%20Hat) is required. 
 
 
 3. Hardware
@@ -84,7 +84,7 @@ This device sample shows developers how to get started with Verified Telementry 
 
 ### Library Initialization 
 
-* the cloned repository has the [Verified Telemetry Library](/Verified-Telemetry) folder, this folder needs to be copied into the libraries folder in the Arduino user files, typically in  ``` C:\Users\VTUser\Documents\Arduino\libraries\Verified-Telemetry ``` for windows.
+* the cloned repository has the [Verified Telemetry Library](/Verified-Telemetry) folder, this folder needs to be copied into the libraries folder in the Arduino user files, typically in  ``` C:\Users\VTUser\Documents\Arduino\libraries\Verified-Telemetry ``` for Windows.
 
 ## Hardware Setup and Configurations
 
@@ -95,14 +95,14 @@ This device sample shows developers how to get started with Verified Telementry 
 
 
 > **Note**    
-> We recommend making connections for all the sensors before running the sample for the first time so that the autocalibration cycle can work seemleesly, if the sensors are connected after the sample is run for the first time, manual fingerprint collection is required, detail in [Manual Fingerprint Collection](#sensor-configuration-and-calibration)
+> We recommend making connections for all the sensors before running the sample for the first time so that the autocalibration cycle can work seamlessly, if the sensors are connected after the sample is run for the first time, manual fingerprint collection is required, detail in [Manual Fingerprint Collection](#sensor-configuration-and-calibration)
 
 
 ### Sample configuration for Digital Sensors
 
 * the sample is configured for 2 Digital sensors, use the below schematic and connection table to test out VT Arudino sample.
-* To modify preexisting Hardware Definitions or to add support for new sensors, minimal changes are required to [sample_freertos_verified_telemetry_init.c](sample_freertos_verified_telemetry_init.c) for these changes, refer [Modifying ADC, GPIO, Hardware Definitions of sample and new sensors](#modifying-adc-gpio-hardware-definitions-of-sample-and-new-sensors).
-* Some sensor also require the sensor read fucntion to be called right before the fingerprint collection, for this reason we recommend you to call all the sensor read fucntion as shown in [Integrating New Sensors](#steps-to-integrate-new-sensor-read-fucntions) section, to avoid any unexpected behaviour.
+* To modify preexisting Hardware Definitions or to add support for new sensors, minimal changes are required to [sample_freertos_verified_telemetry_init.c](sample_freertos_verified_telemetry_init.c) for these changes, refer [Modifying Configurations and Adding New Sensors](#modifying-adc-gpio-hardware-definitions-of-sample-and-new-sensors).
+* Some sensor also require the sensor read function to be called right before the fingerprint collection, for this reason we recommend you to call all the sensor read functions as shown in [Integrating New Sensors](#steps-to-integrate-new-sensors) section, to avoid any unexpected behavior.
 
 
 * ESP8266 Connections 
@@ -135,17 +135,17 @@ This device sample shows developers how to get started with Verified Telementry 
 
 ### Sensor Configuration and Calibration
 
-In Verified Telemetry, fingerprint collection is a key part of sensor reliablity where a reference fingerprint is collected and used to compare with run-time fingerprints
+In Verified Telemetry, fingerprint collection is a key part of sensor reliability where a reference fingerprint is collected and used to compare with run-time fingerprints
 
-* To give a streamline setup experince, the VT Arduino sample collects a refernce fingerprint at **first boot**. for this reason we recommend you to make the sensor connections before running the sample for the first time.
+* To give a streamlined setup experience, the VT Arduino sample collects a reference fingerprint at **first boot**. for this reason we recommend you to make the sensor connections before running the sample for the first time.
 
 * If the device has been booted once or re-calibration is required, commands for calibration can be sent on serial terminal for different sensors : ```resetDigitalSensorOne``` and ```resetDigitalSensorTwo```
 
 ### Uploading the sample and Expected Output
 
-Open the sample in Arduino IDE, select the relevent ESP8266 board like NodeMCU 1.0 (ESP-12E Module) and port and upload the sample to the board. 
+Open the sample in Arduino IDE, select the relevant ESP8266 board like NodeMCU 1.0 (ESP-12E Module) and port and upload the sample to the board. 
 
-* For the first boot, the output should be similar to the below output, where the sample is collecting the reference fingerprint for the sensors and then continues to collect run-time fingerprints to evaluate the sensor reliablity.
+* For the first boot, the output should be similar to the below output, where the sample is collecting the reference fingerprint for the sensors and then continues to collect run-time fingerprints to evaluate the sensor reliability.
 
 ```output
 Calibrating for first boot
@@ -189,7 +189,7 @@ calibrate for : vTSampleSecondSensor
 {'Second_Sensor_Status': 1 ,'Dummy_Second_Sensor_Data': 8} 
 ```
 
-* For the subsequent boots, if you require a re-calibration, you can send the commands for calibration on the serial terminal like : ```resetDigitalSensorOne``` and ```resetDigitalSensorTwo```. The output should be similar to the below output, where the sample is collecting the reference fingerprint for the sensors and then continues to collect run-time fingerprints to evaluate the sensor reliablity.
+* For the subsequent boots, if you require a re-calibration, you can send the commands for calibration on the serial terminal like : ```resetDigitalSensorOne``` and ```resetDigitalSensorTwo```. The output should be similar to the below output, where the sample is collecting the reference fingerprint for the sensors and then continues to collect run-time fingerprints to evaluate the sensor reliability.
 
 ```output
 Sensor One Reset Command
@@ -229,16 +229,16 @@ calibrate for : vTPMSExternal1
 
 ### Modifying ADC, GPIO, Hardware Definitions of sample and new sensors
     
-* Hardware Definitions are present in file sample_vt_device_driver.cpp and is externed in sample_vt_device_driver.h, for any new sensor or to modify current hardware, check the instruction below.
+* Hardware Definitions are present in file sample_vt_device_driver.cpp and is extended in sample_vt_device_driver.h, for any new sensor or to modify current hardware, check the instruction below.
 
-* for ESP32 
+* for ESP8266 
    
-   * got to file [sample_vt_device_driver.c](/sample_vt_device_driver.c) and add/modify Hardware Definitions under ``` /* Sensor Hardware Definitions */ ```
+   * got to file [sample_vt_device_driver.cpp](/sample_vt_device_driver.cpp) and add/modify Hardware Definitions under ``` /* Sensor Hardware Definitions */ ```
    * got to file [sample_vt_device_driver.h](/sample_vt_device_driver.h) and extern any new/modified Hardware Definitions under ``` /* Sensor Hardware Declaration */ ```
 
 ### Adding new sensors to the sample 
 
-* To add new sensors to the sample, the following changes are required in [sample_freertos_verified_telemetry_init.c](sample_freertos_verified_telemetry_init.c).
+* To add new sensors to the sample, the following changes are required in [sample_freertos_verified_telemetry_init.cpp](/sample_freertos_verified_telemetry_init.cpp).
 
 1. Add new VT_SENSOR_HANDLE & FreeRTOS_VT_OBJECT according to the type of sensor.
 
@@ -282,24 +282,24 @@ Verified Telemetry Arduino sample is currently compatible with ESP8266 based boa
 
 To add support for other boards, the key change required is adding a MCP3204 ADC read library. 
 
-1. Find a compatable MCP3204 library that is capable of reading ADC data from MCP3204, a compatable MCP3204 library can be found on the arduino library manager after selecting your board of choice. 
+1. Find a compatible MCP3204 library that is capable of reading ADC data from MCP3204, a compatible  MCP3204 library can be found on the arduino library manager after selecting your board of choice. 
 
-2. The new MCP library and it's corresponding read fucntions need to be added in [sample_vt_device_driver.c](/sample_vt_device_driver.c) file to read the MCP3204 ADC values. Start by adding the library header in the file and then creating an MCP Object as on line number  ```6    #include <MCP3XXX.h>``` and ```10    MCP3XXX_<10, 4, 312500> adc;``` respectively.
+2. The new MCP library and it's corresponding read functions need to be added in [sample_vt_device_driver.cpp](/sample_vt_device_driver.cpp) file to read the MCP3204 ADC values. Start by adding the library header in the file and then creating an MCP Object as on line number  ```6    #include <MCP3XXX.h>``` and ```10    MCP3XXX_<10, 4, 312500> adc;``` respectively.
 
 3. The final step is to use the MCP ADC read function as on line number ```127 adc_mcp3204_read_buffer_local[adc_mcp3204_read_buffer_datapoints_stored] = adc.analogRead(*((uint8_t*)adc_channel));``` which would return the ADC values from MCP3204 to the library.
 
 > **Note**    
-> If an off the shelf library is not available for your board, you can create a basic library with MCP3204 read capability and use it in the sample. the main requirement is that the library should be able to read the ADC values from MCP3204 and return the values as done on line number  
+> If an off-the-shelf library is not available for your board, you can create a basic library with MCP3204 read capability and use it in the sample. the main requirement is that the library should be able to read the ADC values from MCP3204 and return the values as done on line number  
 ```127 ... adc.analogRead(*((uint8_t*)adc_channel));```.
 
 ### Steps to integrate new sensors
 With new sensors, it is required to call the sensor read function just before the fingerprint collection starts, this is needed to capture the ***active*** region of the sensors current i.e. the state where the sensor is actively collecting sensor data, and all the sensing components are active. follow the steps below when adding new sensors.
 
-1. The sensor read function can be defined in [sample_vt_device_driver.c](/sample_vt_device_driver.c) file, as can be seen on line number ``` 41 void sps_setup() ``` and ``` 58 int sps_loop() ``` for SPS sensor.
+1. The sensor read function can be defined in [sample_vt_device_driver.cpp](/sample_vt_device_driver.cpp) file, as can be seen on line number ``` 41 void sps_setup() ``` and ``` 58 int sps_loop() ``` for SPS sensor.
 
-2. the sensor read fucntion, ```sps_loop()``` in this case, should be called just before the ```FreeRTOS_vt_signature_read()``` function is called, as can be seen on line number ``` 143 pm2_5 = sps_loop(); ```.
+2. the sensor read function, ```sps_loop()``` in this case, should be called just before the ```FreeRTOS_vt_signature_read()``` function is called, as can be seen on line number ``` 143 pm2_5 = sps_loop(); ```.
 
-3. Finally, connect the ***DINx*** (x can be 1/2/3/4) pin of the CS Hat to HIGH (3.3v), this enables the input channel ***Sensor 1/2/3/4 Gnd*** on the CS Hat and enables read capabilities. Instead you can short the ***Sensor Global Control*** jumpers to enable all Sensor 1-4 Gnd pins.
+3. Finally, connect the ***DINx*** (x can be 1/2/3/4) pin of the CS Hat to HIGH (3.3v), this enables the input channel ***Sensor 1/2/3/4 Gnd*** on the CS Hat and enables read capabilities. Instead, you can short the ***Sensor Global Control*** jumpers to enable all Sensor 1-4 Gnd pins.
 
 
 ## Support
